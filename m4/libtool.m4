@@ -7600,6 +7600,11 @@ if AC_TRY_EVAL(ac_compile); then
        prev=
        ;;
 
+    -*)
+       # Ignore all other options starting with a dash
+       # (e.g., "-mIPOPT_obj_output_file_name=<tmp_obj>" used by Intel compiler)
+       ;;
+
     *.lto.$objext) ;; # Ignore GCC LTO objects
     *.$objext)
        # This assumes that the test object file only shows up
