@@ -4420,6 +4420,12 @@ m4_if([$1], [CXX], [
 	      _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
 	      _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Qoption ld '
 	      ;;
+	    *Cray\ C*)
+	      # Cray C++ compiler
+	      _LT_TAGVAR(lt_prog_compiler_pic, $1)='-hpic'
+	      _LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
+	      _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
+	      ;;
 	    *pgCC* | *pgcpp*)
 	      # Portland Group/NVIDIA C++ compiler
 	      _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fpic'
@@ -4782,6 +4788,11 @@ m4_if([$1], [CXX], [
         *Intel*\ [[CF]]*Compiler*)
 	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fPIC'
+	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
+	  ;;
+	*Cray\ Fortran* | *Cray\ C*)
+	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
+	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-hpic'
 	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
 	  ;;
 	*pgcc* | *pgf77* | *pgf90* | *pgf95* | *pgfortran*)
@@ -5281,6 +5292,14 @@ _LT_EOF
 	  fi
 	  ;;
 	esac
+	case `$CC -V 2>&1 | sed 5q` in
+	*Cray\ C* | *Cray\ Fortran*)    # Cray C/C++/Fortran
+	  _LT_TAGVAR(whole_archive_flag_spec, $1)='$wl--whole-archive`new_convenience=; for conv in $convenience\"\"; do test -z \"$conv\" || new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` $wl--no-whole-archive'
+	  _LT_TAGVAR(compiler_needs_object, $1)=yes
+	  _LT_TAGVAR(archive_cmds_need_lc, $1)='no'
+	  _LT_TAGVAR(archive_cmds, $1)='save_STRIP=$STRIP; unset STRIP; $CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib; ret=\$?; STRIP=\$save_STRIP; export STRIP; (exit \$ret)'
+	  ;;
+        esac
       else
         _LT_TAGVAR(ld_shlibs, $1)=no
       fi
@@ -5824,6 +5843,16 @@ _LT_EOF
 	# Fabrice Bellard et al's Tiny C Compiler
 	_LT_TAGVAR(ld_shlibs, $1)=yes
 	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag -o $lib $libobjs $deplibs $compiler_flags'
+	;;
+      esac
+      case `$CC -V 2>&1 | sed 5q` in
+      *Cray\ C* | *Cray\ Fortran*)    # Cray C/C++/Fortran
+	_LT_TAGVAR(whole_archive_flag_spec, $1)='$wl--whole-archive`new_convenience=; for conv in $convenience\"\"; do test -z \"$conv\" || new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` $wl--no-whole-archive'
+	_LT_TAGVAR(compiler_needs_object, $1)=yes
+	_LT_TAGVAR(archive_cmds, $1)='save_STRIP=$STRIP; unset STRIP; $CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib; ret=\$?; STRIP=\$save_STRIP; export STRIP; (exit \$ret)'
+	;;
+      *)
+	_LT_TAGVAR(ld_shlibs, $1)=no
 	;;
       esac
       ;;
@@ -7097,6 +7126,21 @@ if test yes != "$_lt_caught_CXX_error"; then
 	      # necessary to make sure instantiated templates are included
 	      # in the archive.
 	      _LT_TAGVAR(old_archive_cmds, $1)='$CC -xar -o $oldlib $oldobjs'
+	      ;;
+	    *Cray\ C*)		# Cray C++ compiler
+	      # If STRIP is set while creating a shared library with
+	      # the Cray compiler, the library has its symbols
+	      # removed.  So we unset and restore it.
+	      _LT_TAGVAR(archive_cmds, $1)='save_STRIP=$STRIP; unset STRIP; $CC -shared $wl-soname $wl$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags; ret=\$?; STRIP=\$save_STRIP; export STRIP; (exit \$ret)'
+	      _LT_TAGVAR(archive_expsym_cmds, $1)=''
+	      _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
+	      _LT_TAGVAR(whole_archive_flag_spec, $1)='-vv $wl--whole-archive`new_convenience=; for conv in $convenience\"\"; do test -z \"$conv\" || new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` $wl--no-whole-archive'
+	      _LT_TAGVAR(compiler_needs_object, $1)=yes
+
+	      # Not sure whether something based on
+	      # $CC $CFLAGS -v conftest.$objext -o libconftest$shared_ext 2>&1
+	      # would be better.
+	      output_verbose_link_cmd='func_echo_all'
 	      ;;
 	    *pgCC* | *pgcpp*)
 	      # Portland Group C++ compiler
