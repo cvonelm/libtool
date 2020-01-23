@@ -4420,6 +4420,12 @@ m4_if([$1], [CXX], [
 	      _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
 	      _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Qoption ld '
 	      ;;
+	    *Fujitsu*)
+	      # Fujitsu C/C++ Compiler Driver
+	      _LT_TAGVAR(lt_prog_compiler_pic, $1)='-Kpic'
+	      _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
+	      _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
+	      ;;
 	    esac
 	    ;;
 	esac
@@ -4775,6 +4781,11 @@ m4_if([$1], [CXX], [
 	*Portland\ Group*)
 	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fpic'
+	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
+	  ;;
+	*Fujitsu*)
+	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
+	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-Kpic'
 	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
 	  ;;
 	esac
