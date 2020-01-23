@@ -6672,7 +6672,10 @@ func_mode_link ()
 	    # practice:
 	    case $deplib in
 	    -L*) new_libs="$deplib $new_libs" ;;
-	    -R*) ;;
+	    -R*)
+	      if test prog = "$linkmode"; then
+	        new_libs="$deplib $new_libs"
+	      fi ;;
 	    *)
 	      # And here is the reason: when a library appears more
 	      # than once as an explicit dependence of a library, or
