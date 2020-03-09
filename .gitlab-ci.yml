@@ -1,0 +1,4 @@
+include:
+  - project: 'perftools/utils/afs-dev'
+    ref: master
+    file: 'trigger.gitlab-ci.yml'
