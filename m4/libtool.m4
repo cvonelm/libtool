@@ -5276,6 +5276,9 @@ _LT_EOF
 	    tmp_sharedflag='-G' ;;
 	  *Sun\ F*)			# Sun Fortran 8.3
 	    tmp_sharedflag='-G' ;;
+	  *xlc*) # IBM XL C
+	    tmp_sharedflag='-qmkshrobj'
+	    tmp_addflag= ;;
 	  esac
 	esac
 	_LT_TAGVAR(archive_cmds, $1)='$CC '"$tmp_sharedflag""$tmp_addflag"' $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
