@@ -4811,6 +4811,11 @@ m4_if([$1], [CXX], [
 	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-Kpic'
 	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
 	  ;;
+	*xlf*)
+	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
+	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-qpic'
+	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-qstaticlink'
+	  ;;
 	esac
 	;;
       esac
