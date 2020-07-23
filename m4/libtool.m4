@@ -7189,7 +7189,18 @@ if test yes != "$_lt_caught_CXX_error"; then
 	      _LT_TAGVAR(export_dynamic_flag_spec, $1)='$wl--export-dynamic'
 	      _LT_TAGVAR(whole_archive_flag_spec, $1)='$wl--whole-archive`for conv in $convenience\"\"; do test  -n \"$conv\" && new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` $wl--no-whole-archive'
 	      ;;
-	    esac
+	    *xlC* | *xlc++* ) # IBM XL 
+	      _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
+	      _LT_TAGVAR(export_dynamic_flag_spec, $1)='$wl--export-dynamic'
+	      _LT_TAGVAR(archive_cmds, $1)='$CC -qmkshrobj $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
+	      if test yes = "$supports_anon_versioning"; then
+	        _LT_TAGVAR(archive_expsym_cmds, $1)='echo "{ global:" > $output_objdir/$libname.ver~
+	        cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $output_objdir/$libname.ver~
+	        echo "local: *; };" >> $output_objdir/$libname.ver~
+	        $CC -qmkshrobj $libobjs $deplibs $compiler_flags $wl-soname $wl$soname $wl-version-script $wl$output_objdir/$libname.ver -o $lib'
+	      fi
+	    ;;
+            esac
 	    ;;
 	esac
 	;;
