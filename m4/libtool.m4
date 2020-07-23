@@ -5261,9 +5261,16 @@ _LT_EOF
 	  tmp_sharedflag='--shared' ;;
         nagfor*)                        # NAGFOR 5.3
           tmp_sharedflag='-Wl,-shared' ;;
-	xl[[cC]]* | bgxl[[cC]]* | mpixl[[cC]]*) # IBM XL C 8.0 on PPC (deal with xlf below)
+	xl[[cC]]* | bgxl[[cC]]* | mpixl[[cC]]*) # IBM XL C 8.0 on PPC
 	  tmp_sharedflag='-qmkshrobj'
 	  tmp_addflag= ;;
+	xlf* | mpixlf*) # IBM xlf since version 13 knows about -qmkshrobj, see also below
+	  xlf_version=`$CC -qversion=verbose 2>&1 | sed -n 2p | sed -e "s/^Version: //" | cut -d'.' -f 1`
+	  if test $xlf_version -ge 13; then
+	    tmp_sharedflag='-qmkshrobj'
+	    tmp_addflag=
+	  fi
+	;;
 	nvcc*)	# Cuda Compiler Driver 2.2
 	  _LT_TAGVAR(whole_archive_flag_spec, $1)='$wl--whole-archive`for conv in $convenience\"\"; do test  -n \"$conv\" && new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` $wl--no-whole-archive'
 	  _LT_TAGVAR(compiler_needs_object, $1)=yes
@@ -5279,6 +5286,13 @@ _LT_EOF
 	  *xlc*) # IBM XL C
 	    tmp_sharedflag='-qmkshrobj'
 	    tmp_addflag= ;;
+	  *xlf*) # IBM xlf since version 13 knows about -qmkshrobj
+	    xlf_version=`$CC -qversion=verbose 2>&1 | sed -n 2p | sed -e "s/^Version: //" | cut -d'.' -f 1`
+	    if test $xlf_version -ge 13; then
+	      tmp_sharedflag='-qmkshrobj'
+	      tmp_addflag=
+	    fi
+	    ;;
 	  esac
 	esac
 	_LT_TAGVAR(archive_cmds, $1)='$CC '"$tmp_sharedflag""$tmp_addflag"' $libobjs $deplibs $compiler_flags $wl-soname $wl$soname -o $lib'
@@ -5294,7 +5308,21 @@ _LT_EOF
 	tcc*)
 	  _LT_TAGVAR(export_dynamic_flag_spec, $1)='-rdynamic'
 	  ;;
-	xlf* | bgf* | bgxlf* | mpixlf*)
+	xlf* | mpixlf*) # IBM xlf since version 13 knows about -qmkshrobj, see also above
+	  xlf_version=`$CC -qversion=verbose 2>&1 | sed -n 2p | sed -e "s/^Version: //" | cut -d'.' -f 1`
+	  if test $xlf_version -lt 13; then
+	    _LT_TAGVAR(whole_archive_flag_spec, $1)='--whole-archive$convenience --no-whole-archive'
+	    _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
+	    _LT_TAGVAR(archive_cmds, $1)='$LD -shared $libobjs $deplibs $linker_flags -soname $soname -o $lib'
+	    if test yes = "$supports_anon_versioning"; then
+	      _LT_TAGVAR(archive_expsym_cmds, $1)='echo "{ global:" > $output_objdir/$libname.ver~
+                cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $output_objdir/$libname.ver~
+                echo "local: *; };" >> $output_objdir/$libname.ver~
+                $LD -shared $libobjs $deplibs $linker_flags -soname $soname -version-script $output_objdir/$libname.ver -o $lib'
+	    fi
+          fi
+          ;;
+	bgf* | bgxlf*)
 	  # IBM XL Fortran 10.1 on PPC cannot create shared libs itself
 	  _LT_TAGVAR(whole_archive_flag_spec, $1)='--whole-archive$convenience --no-whole-archive'
 	  _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='$wl-rpath $wl$libdir'
