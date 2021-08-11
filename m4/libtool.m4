@@ -4393,8 +4393,8 @@ m4_if([$1], [CXX], [
 	    _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fPIC'
 	    _LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
 	    ;;
-	  pgCC* | pgcpp*)
-	    # Portland Group C++ compiler
+	  pgCC* | pgcpp* | pgc++* | nvc++*)
+	    # NVIDIA HPC C++ compiler
 	    _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	    _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fpic'
 	    _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
@@ -4426,8 +4426,8 @@ m4_if([$1], [CXX], [
 	      _LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
 	      _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	      ;;
-	    *pgCC* | *pgcpp*)
-	      # Portland Group/NVIDIA C++ compiler
+	    *pgCC* | *pgcpp* | *pgc++* | *nvc++*)
+	      # NVIDIA HPC C++ compiler
 	      _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fpic'
 	      _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
 	      _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
@@ -4754,9 +4754,8 @@ m4_if([$1], [CXX], [
 	_LT_TAGVAR(lt_prog_compiler_pic, $1)='-fPIC -DPIC'
 	_LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
 	;;
-      pgcc* | pgf77* | pgf90* | pgf95* | pgfortran*)
-        # Portland Group compilers (*not* the Pentium gcc compiler,
-	# which looks to be a dead project)
+      pgcc* | pgf77* | pgf90* | pgf95* | pgfortran* | nvc* | nvfortran*)
+        # NVIDIA HPC Compilers
 	_LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	_LT_TAGVAR(lt_prog_compiler_pic, $1)='-fpic'
 	_LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
@@ -4801,7 +4800,7 @@ m4_if([$1], [CXX], [
 	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-hpic'
 	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
 	  ;;
-	*pgcc* | *pgf77* | *pgf90* | *pgf95* | *pgfortran*)
+	*Portland\ Group* | *NVIDIA\ Compilers* | *PGI\ Compilers*)
 	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fpic'
 	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
@@ -5238,16 +5237,16 @@ _LT_EOF
 	tmp_addflag=' $pic_flag'
 	tmp_sharedflag='-shared'
 	case $cc_basename,$host_cpu in
-        pgcc*)				# Portland Group C compiler
+        pgcc* | nvc*)				# NVIDIA HPC C compiler
 	  _LT_TAGVAR(whole_archive_flag_spec, $1)='$wl--whole-archive`for conv in $convenience\"\"; do test  -n \"$conv\" && new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` $wl--no-whole-archive'
 	  tmp_addflag=' $pic_flag'
 	  ;;
-	pgCC*)				# Portland Group C++ compiler
+	pgCC* | pgcpp* | pgc++* | nvc++*)				# NVIDIA HPC C++ compiler
 	  _LT_TAGVAR(whole_archive_flag_spec, $1)='${wl}--whole-archive`for conv in $convenience\"\"; do test  -n \"$conv\" && new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` ${wl}--no-whole-archive'
 	  tmp_addflag=' $pic_flag'
 	  ;;
-	pgf77* | pgf90* | pgf95* | pgfortran*)
-					# Portland Group f77 and f90 compilers
+	pgf77* | pgf90* | pgf95* | pgfortran* | nvfortran*)
+					# NVIDIA HPC Fortran compiler
 	  _LT_TAGVAR(whole_archive_flag_spec, $1)='$wl--whole-archive`for conv in $convenience\"\"; do test  -n \"$conv\" && new_convenience=\"$new_convenience,$conv\"; done; func_echo_all \"$new_convenience\"` $wl--no-whole-archive'
 	  tmp_addflag=' $pic_flag -Mnomain' ;;
 	ecc*,ia64* | icc*,ia64*)	# Intel C compiler on ia64
@@ -7086,7 +7085,7 @@ if test yes != "$_lt_caught_CXX_error"; then
 	    _LT_TAGVAR(whole_archive_flag_spec, $1)='$wl--whole-archive$convenience $wl--no-whole-archive'
 	    ;;
           pgCC* | pgcpp*)
-            # Portland Group C++ compiler
+            # NVIDIA HPC C++ compiler. No special treatment for pgc++ and nvc++.
 	    case `$CC -V` in
 	    *pgCC\ [[1-5]].* | *pgcpp\ [[1-5]].*)
 	      _LT_TAGVAR(prelink_cmds, $1)='tpldir=Template.dir~
@@ -7186,7 +7185,7 @@ if test yes != "$_lt_caught_CXX_error"; then
 	      output_verbose_link_cmd='func_echo_all'
 	      ;;
 	    *pgCC* | *pgcpp*)
-	      # Portland Group C++ compiler
+	      # NVIDIA HPC C++ compiler. No special treatment for pgc++ and nvc++.
 	      case `$CC -V` in
 	      *pgCC\ [[1-5]].* | *pgcpp\ [[1-5]].*)
 	        _LT_TAGVAR(prelink_cmds, $1)='tpldir=Template.dir~
