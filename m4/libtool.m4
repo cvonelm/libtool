@@ -4723,12 +4723,6 @@ m4_if([$1], [CXX], [
 	_LT_TAGVAR(lt_prog_compiler_pic, $1)='-KPIC'
 	_LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
         ;;
-      *flang)
-        # Flang compiler
-	_LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
-	_LT_TAGVAR(lt_prog_compiler_pic, $1)='-fPIC -DPIC'
-	_LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
-        ;;
       # icc used to be incompatible with GCC.
       # ICC 10 doesn't accept -KPIC any more.
       icc* | ifort*)
@@ -4754,12 +4748,13 @@ m4_if([$1], [CXX], [
 	_LT_TAGVAR(lt_prog_compiler_pic, $1)='-fPIC'
 	_LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
 	;;
-      armflang* | flang*)
-	# Flang and ARM HPC Compiler
+        # Catch both prefix and suffix variants: armflang, amdflang, flang<number>
+      *flang*)
+        # Flang compiler
 	_LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	_LT_TAGVAR(lt_prog_compiler_pic, $1)='-fPIC -DPIC'
 	_LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
-	;;
+        ;;
       pgcc* | pgf77* | pgf90* | pgf95* | pgfortran* | nvc* | nvfortran*)
         # NVIDIA HPC Compilers
 	_LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
