@@ -4773,7 +4773,7 @@ m4_if([$1], [CXX], [
 	_LT_TAGVAR(lt_prog_compiler_static, $1)='-qstaticlink'
 	;;
       *)
-	case `$CC -V 2>&1` in
+	case `$CC -V 2>&1``$CC -v 2>&1` in
 	*Sun\ Ceres\ Fortran* | *Sun*Fortran*\ [[1-7]].* | *Sun*Fortran*\ 8.[[0-3]]*)
 	  # Sun Fortran 8.3 passes all unrecognized flags to the linker
 	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-KPIC'
@@ -4815,6 +4815,12 @@ m4_if([$1], [CXX], [
 	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-qpic'
 	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-qstaticlink'
+	  ;;
+	# Not sure if `flang version` exists, but honor vendor prefix like 'AMD '
+	*clang\ version* | *flang\ version* | *flang-new\ version*)
+	  _LT_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
+	  _LT_TAGVAR(lt_prog_compiler_pic, $1)='-fPIC -DPIC'
+	  _LT_TAGVAR(lt_prog_compiler_static, $1)='-static'
 	  ;;
 	esac
 	;;
