@@ -1700,6 +1700,9 @@ $opt_help || {
 
 func_mode_help ()
 {
+    if test "$progpath"="/opt/nec/ve/bin/ve-libtool"; then
+              progname=$progpath
+    fi
     # We need to display help for each of the modes.
     case $opt_mode in
       "")
@@ -2100,7 +2103,11 @@ func_mode_finish ()
 	done
         ${RM}r "$tmpdir"
       fi
-    fi
+      fi
+      # Changes to add VE specific "ldconfig" path
+       if test "$CC" = "/opt/nec/ve/bin/ncc" || test "$progpath" = "/opt/nec/ve/bin/ve-libtool"; then
+               finish_cmds='/opt/nec/ve/sbin/ve-ldconfig -n $libdir'
+       fi
 
     if test -n "$finish_cmds$finish_eval" && test -n "$libdirs"; then
       for libdir in $libdirs; do
@@ -2933,9 +2940,12 @@ static const void *lt_preloaded_setup() {
 	  *) func_append symtab_cflags " $arg" ;;
 	  esac
 	done
-
-	# Now compile the dynamic symbol file.
-	func_show_eval '(cd $output_objdir && $LTCC$symtab_cflags -c$no_builtin_flag$pic_flag_for_symtable "$my_dlsyms")' 'exit $?'
+       if test "$CC" = "/opt/nec/ve/bin/ncc"; then
+               symtab_cflags_ncc=" -fPIC"
+               func_show_eval '(cd $output_objdir && $CC$symtab_cflags_ncc -c$pic_flag_for_symtable "$my_dlsyms")' 'exit $?'
+       else
+               func_show_eval '(cd $output_objdir && $LTCC$symtab_cflags -c$no_builtin_flag$pic_flag_for_symtable "$my_dlsyms")' 'exit $?'
+       fi
 
 	# Clean up the generated files.
 	func_show_eval '$RM "$output_objdir/$my_dlsyms" "$nlist" "${nlist}S" "${nlist}T" "${nlist}I"'
@@ -4651,6 +4661,12 @@ func_mode_link ()
     single_module=$wl-single_module
     func_infer_tag $base_compile
 
+       # To add the VE specific linker flag which required for library linking.
+       base_compile=`$ECHO "$base_compile" | awk '{print $1}'`
+       if test "$base_compile" = "/opt/nec/ve/bin/ncc"; then
+               CC=/opt/nec/ve/bin/ncc;
+       archive_cmds="\$CC -shared \$pic_flag \$libobjs \$deplibs \$compiler_flags \${wl}-soname \$wl\$soname -o \$lib"
+       fi
     # We need to know -static, to get the right output filenames.
     for arg
     do
